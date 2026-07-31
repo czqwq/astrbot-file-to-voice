@@ -1,0 +1,107 @@
+{
+  "trigger_words": {
+    "type": "list",
+    "description": "触发词列表，在群聊中需要配合 @机器人 使用",
+    "default": ["/转语音", "/tovoice", "/2vc"],
+    "items": {
+      "type": "string",
+      "description": "触发词，例如 /转语音"
+    },
+    "hint": "支持多个触发词，群聊中需 @机器人 + 触发词唤起"
+  },
+
+  "blacklist_groups": {
+    "type": "list",
+    "description": "群黑名单（群号），黑名单优先级高于白名单",
+    "default": [],
+    "items": {
+      "type": "string",
+      "description": "QQ群号，例如 123456789"
+    },
+    "hint": "在此列表中的群将无法使用本插件功能，优先级最高"
+  },
+
+  "whitelist_groups": {
+    "type": "list",
+    "description": "群白名单（群号），为空则所有群允许（除非被黑名单拦截）",
+    "default": [],
+    "items": {
+      "type": "string",
+      "description": "QQ群号，例如 123456789"
+    },
+    "hint": "不为空时仅列表中的群允许使用。黑名单优先于白名单"
+  },
+
+  "output_format": {
+    "type": "string",
+    "description": "ffmpeg 输出音频格式",
+    "default": "mp3",
+    "options": ["mp3", "wav", "amr", "ogg", "flac", "aac", "m4a", "opus"],
+    "hint": "推荐 mp3（体积与质量平衡）或 amr（最小体积，适合 QQ 语音）"
+  },
+
+  "ffmpeg_path": {
+    "type": "string",
+    "description": "ffmpeg 可执行文件路径",
+    "default": "ffmpeg",
+    "hint": "一般使用系统 PATH 中的 ffmpeg 即可，无需修改。若需指定路径请填写绝对路径"
+  },
+
+  "waiting_timeout": {
+    "type": "int",
+    "description": "等待模式下等待文件的超时时间（秒）",
+    "default": 60,
+    "hint": "用户发送触发命令后，需在此时间内发送文件，超时则需重新触发"
+  },
+
+  "msg_processing": {
+    "type": "text",
+    "description": "处理中提示文案（设为空字符串则不发送）",
+    "default": "🔊 正在转换并发送语音…",
+    "hint": "在发送语音之前显示的提示文字。受 send_processing_msg 开关控制"
+  },
+
+  "msg_success": {
+    "type": "text",
+    "description": "发送成功后的提示文案（默认为空，不发送）",
+    "default": "",
+    "hint": "语音发送完成后追加的文字确认。留空则不发送。受 send_success_msg 开关控制"
+  },
+
+  "msg_failed": {
+    "type": "text",
+    "description": "转换失败时的提示文案",
+    "default": "❌ 文件转换为语音失败，请检查文件是否损坏或格式是否受支持。"
+  },
+
+  "msg_no_file": {
+    "type": "text",
+    "description": "未找到文件时的提示文案",
+    "default": "❌ 未能获取文件，请确认引用的消息中包含文件或图片。"
+  },
+
+  "msg_blacklisted": {
+    "type": "text",
+    "description": "群在黑名单/不在白名单时的提示文案",
+    "default": "⛔ 该群不在本插件允许列表中。"
+  },
+
+  "msg_waiting": {
+    "type": "text",
+    "description": "进入等待模式后的提示文案（支持 {timeout} 占位符）",
+    "default": "📎 请在 {timeout} 秒内发送要转换的文件（支持 mp4/mp3/wav/flac/jpg/png …）",
+    "hint": "可使用 {timeout} 占位符表示等待秒数"
+  },
+
+  "send_processing_msg": {
+    "type": "bool",
+    "description": "是否在转换时发送「正在处理…」提示消息",
+    "default": true
+  },
+
+  "send_success_msg": {
+    "type": "bool",
+    "description": "是否在语音发送完成后追加一条成功确认消息",
+    "default": false
+  }
+}

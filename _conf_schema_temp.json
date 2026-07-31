@@ -1,0 +1,149 @@
+{
+  "enable_render": {
+    "type": "bool",
+    "description": "拦截纯文本回复并渲染为图片",
+    "default": true
+  },
+  "render_scope": {
+    "type": "string",
+    "description": "渲染范围：llm_only=仅渲染 LLM 回复；all_text=渲染所有纯文本回复",
+    "default": "llm_only",
+    "options": ["llm_only", "all_text"]
+  },
+
+  "render_char_threshold": {
+    "type": "int",
+    "description": "渲染字符阈值（0 为不限制，超过阈值则直接发送纯文本或分割渲染）",
+    "default": 60
+  },
+
+  "split_long_text": {
+    "type": "bool",
+    "description": "启用超长文本智能分割渲染（超过阈值时自动分割为多张图片）",
+    "default": false
+  },
+
+  "merge_split_images": {
+    "type": "bool",
+    "description": "合并分割渲染的图片为一张（需启用超长文本智能分割渲染）",
+    "default": true
+  },
+
+  "merge_max_images": {
+    "type": "int",
+    "description": "每批最多合并几张图片（默认5张）",
+    "default": 5
+  },
+
+  "image_quality": {
+    "type": "int",
+    "description": "JPEG图片质量（1-100，默认85）",
+    "default": 85
+  },
+
+  "font_path": {
+    "type": "string",
+    "description": "Pillow 备用渲染使用的字体文件路径，不填则自动匹配系统字体",
+    "default": ""
+  },
+
+  "background_dir": {
+    "type": "string",
+    "description": "背景图片目录（插件目录下）",
+    "default": "background"
+  },
+
+  "character_root": {
+    "type": "string",
+    "description": "立绘子目录根路径（插件目录下）",
+    "default": "renwulihui"
+  },
+
+  "default_emotion": {
+    "type": "string",
+    "description": "未解析出标签时使用的情绪 key",
+    "default": "neutral"
+  },
+
+  "enable_emotion_prompt": {
+    "type": "bool",
+    "description": "是否在 LLM 请求前补充情绪标签提示语",
+    "default": true
+  },
+
+  "emotion_prompt_template": {
+    "type": "text",
+    "description": "追加到 system_prompt 的提示，可用 {tags} 代表全部标签",
+    "default": "请在每一次回复的开头添加一条情绪标签（包括且仅限 {tags} 中的一个）作为文本前缀。【警告⚠️】：工具调用响应时切勿添加表情标签！！！"
+  },
+
+  "webui_enabled": {
+    "type": "bool",
+    "description": "是否启动文本框拖拽 WebUI",
+    "default": true
+  },
+
+  "webui_host": {
+    "type": "string",
+    "description": "WebUI 监听地址，本地可设置127.0.0.1",
+    "default": "0.0.0.0"
+  },
+  "webui_port": {
+    "type": "int",
+    "description": "WebUI 端口，可设置为astrbot现成端口（6180-6200）",
+    "default": 18765
+  },
+  "webui_token": {
+    "type": "string",
+    "description": "访问 WebUI 时需要附带的 token，可留空，服务器用户务必添加",
+    "default": ""
+  },
+
+  "emotion_sets": {
+    "type": "list",
+    "description": "情绪标签及其对应的立绘文件夹、展示文本与颜色，若不填则使用默认",
+    "default": [
+      { "key": "happy", "folder": "happy", "label": "开心", "color": "#FFC857", "enabled": true },
+      { "key": "sad", "folder": "sad", "label": "低落", "color": "#7DA1FF", "enabled": true },
+      { "key": "shy", "folder": "shy", "label": "害羞", "color": "#F9C5D1", "enabled": true },
+      { "key": "surprise", "folder": "surprise", "label": "惊讶", "color": "#F5E960", "enabled": true },
+      { "key": "angry", "folder": "angry", "label": "生气", "color": "#FF8A8A", "enabled": true }
+    ],
+    "items": {
+      "type": "object",
+      "items": {
+        "key":   { "type": "string", "description": "情绪标签（英文/数字）" },
+        "folder":{ "type": "string", "description": "对应立绘所在文件夹" },
+        "label": { "type": "string", "description": "界面展示用的中文名" },
+        "color": { "type": "string", "description": "角标颜色" },
+        "enabled": { "type": "bool", "default": true }
+      }
+    }
+  },
+
+  "whitelist_mode": {
+    "type": "bool",
+    "description": "是否启用白名单模式（true=白名单模式，false=黑名单模式）",
+    "default": false,
+    "hint": "黑名单模式：列表中的群/私聊禁用传话筒；白名单模式：仅列表中的群/私聊启用传话筒"
+  },
+
+  "whitelist": {
+    "type": "list",
+    "description": "黑白名单列表（会话ID列表，格式：platform:message_type:session_id）",
+    "default": [],
+    "items": {
+      "type": "string",
+      "description": "会话ID，例如：aiocqhttp:group:123456789"
+    },
+    "hint": "可通过 /传话筒 开启 或 /传话筒 关闭 指令管理，也可在此直接编辑。黑名单模式：列表中的会话禁用传话筒；白名单模式：仅列表中的会话启用传话筒"
+  },
+
+  "control_permission": {
+    "type": "string",
+    "description": "控制指令权限：admin=仅框架管理员，admin_or_group_admin=框架管理员或群管理",
+    "default": "admin_or_group_admin",
+    "options": ["admin", "admin_or_group_admin"],
+    "hint": "控制切换预设和开启/关闭传话筒的权限"
+  }
+}

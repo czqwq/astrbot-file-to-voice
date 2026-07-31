@@ -68,7 +68,7 @@ _CODEC_MAP: dict[str, str] = {
     "astrbot_plugin_file_to_voice",
     "czqwq",
     "将引用文件转为语音发送的QQ平台插件",
-    "1.0.1",
+    "1.0.3",
 )
 class FileToVoice(Star):
     """QQ 平台文件转语音插件。"""
