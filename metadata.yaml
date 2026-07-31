@@ -1,0 +1,8 @@
+name: astrbot_plugin_file_to_voice
+display_name: 文件转语音
+desc: QQ平台插件，支持将引用文件（或直接发送文件）转为语音消息发送。支持配置触发词、群黑白名单，基于ffmpeg进行格式转换。
+version: v1.0.0
+author: czqwq
+repo: https://github.com/czqwq/astrbot-plugin-file-to-voice
+support_platforms:
+  - aiocqhttp
