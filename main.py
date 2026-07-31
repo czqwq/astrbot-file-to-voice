@@ -67,6 +67,11 @@ class FileToVoice(Star):
     def __init__(self, context: Context, config: dict | None = None) -> None:
         super().__init__(context, config)
 
+        # 防御：确保 logger 可用（Star.__init__ 在某些加载路径下可能未设置）
+        if not hasattr(self, "logger"):
+            import logging
+            self.logger = logging.getLogger("astrbot")
+
         # 等待状态： (session_id, sender_id) → 过期时间戳
         # 使用 session_id + sender_id 组合键，确保群聊中每个用户独立等待
         self.waiting_sessions: dict[tuple[str, str], float] = {}
